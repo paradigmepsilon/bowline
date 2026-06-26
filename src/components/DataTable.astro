@@ -1,0 +1,53 @@
+---
+/**
+ * Corporate-data table — label (sans) / value (mono) rows with hairline rules.
+ * Values flagged `mono` render in IBM Plex Mono (codes); `accent` tints the
+ * value Signal Blue (e.g. the primary NAICS). Pass already-resolved strings
+ * (use display() upstream so nullable fields read "Available upon request").
+ */
+export interface Row {
+  label: string;
+  value: string;
+  mono?: boolean;
+  accent?: boolean;
+}
+interface Props {
+  caption: string;
+  rows: ReadonlyArray<Row>;
+  tone?: "light" | "dark";
+  class?: string;
+}
+const { caption, rows, tone = "light", class: className } = Astro.props;
+
+const ruleColor = tone === "dark" ? "border-steel-700/70" : "border-mist-200";
+const labelColor = tone === "dark" ? "text-steel-400" : "text-steel-600";
+const valueColor = tone === "dark" ? "text-mist-100" : "text-navy";
+const capColor = tone === "dark" ? "text-steel-500" : "text-steel-600";
+---
+
+<table class:list={["w-full border-collapse text-left", className]}>
+  <caption class:list={["eyebrow mb-4 text-left", capColor]}>{caption}</caption>
+  <tbody>
+    {
+      rows.map((row, i) => (
+        <tr class:list={[i > 0 ? "border-t" : "", ruleColor]}>
+          <th
+            scope="row"
+            class:list={["py-3 pr-6 align-top text-sm font-400", labelColor]}
+          >
+            {row.label}
+          </th>
+          <td
+            class:list={[
+              "py-3 align-top text-sm",
+              row.mono ? "mono-data" : "",
+              row.accent ? "text-signal" : valueColor,
+            ]}
+          >
+            {row.value}
+          </td>
+        </tr>
+      ))
+    }
+  </tbody>
+</table>

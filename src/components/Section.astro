@@ -1,0 +1,45 @@
+---
+/**
+ * Section wrapper — enforces the surface, vertical rhythm, and content rail.
+ * Centralizes the alternating navy ↔ mist band system from the brand board.
+ *
+ * surface:  "navy" (primary dark) | "navy-700" (adjacent dark step) | "mist" (light)
+ * seam:     when set, renders the Bearing-Line signature across the top edge,
+ *           with the knot positioned at `seamAt` (0–1).
+ */
+import BearingLineSeam from "./motifs/BearingLineSeam.astro";
+
+interface Props {
+  surface?: "navy" | "navy-700" | "mist";
+  seam?: boolean;
+  seamAt?: number;
+  id?: string;
+  class?: string;
+}
+const {
+  surface = "mist",
+  seam = false,
+  seamAt = 0.5,
+  id,
+  class: className,
+} = Astro.props;
+
+const surfaceClass = {
+  navy: "bg-navy text-mist-100",
+  "navy-700": "bg-navy-700 text-mist-100",
+  mist: "bg-mist-50 text-navy",
+}[surface];
+---
+
+<section id={id} class:list={["relative", surfaceClass, className]}>
+  {
+    seam && (
+      <div class="page-rail">
+        <BearingLineSeam class="h-3 w-full" position={seamAt} />
+      </div>
+    )
+  }
+  <div class="page-rail section-pad">
+    <slot />
+  </div>
+</section>

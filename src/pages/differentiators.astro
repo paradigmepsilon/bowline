@@ -1,0 +1,92 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ImageHero from "../components/ImageHero.astro";
+import Section from "../components/Section.astro";
+import ImageBand from "../components/ImageBand.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import Cta from "../components/Cta.astro";
+import DiffRow from "../components/DiffRow.astro";
+import CredentialBadge from "../components/CredentialBadge.astro";
+import { company, differentiators, credentials, federalCustomers } from "../config/company";
+
+const diffIcons = ["knot", "shield", "node", "lock", "shield"] as const;
+---
+
+<BaseLayout
+  title="Differentiators"
+  description={`Why ${company.dba}: multi-category set-aside positioning, 20+ years enterprise IT depth, MBA-credentialed leadership, Southeast federal proximity, and a practitioner credential portfolio.`}
+  path="/differentiators"
+>
+  <ImageHero
+    src="/hero-differentiators.jpg"
+    imgAlt="Steel and concrete technology structure at dusk"
+    eyebrow="Differentiators"
+    title="Established engineering depth in a focused small business"
+    intro="Bowline Federal pairs the set-aside positioning agencies need with the technical maturity programs require."
+  />
+
+  <!-- Zig-zag differentiator rows; the seam ties its knot over the firm's
+       strongest claim (the first, set-aside positioning). -->
+  <Section surface="mist" seam seamAt={0.1}>
+    <SectionHeading eyebrow="What Sets Us Apart" title="Five reasons agencies choose Bowline" index="01" />
+    <div class="mt-6">
+      {
+        differentiators.map((d, i) => (
+          <DiffRow differentiator={d} index={i} flip={i % 2 === 1} icon={diffIcons[i]} />
+        ))
+      }
+    </div>
+  </Section>
+
+  <!-- Federal proximity ledger -->
+  <Section surface="navy-700">
+    <SectionHeading
+      eyebrow="Southeast Proximity"
+      title="Near a concentration of federal customers"
+      lede="Operating from the Atlanta metro places Bowline Federal within responsive reach of major federal installations and agencies across the Southeast."
+      tone="dark"
+      index="02"
+    />
+    <ul class="mt-10 grid gap-px overflow-hidden rounded border border-steel-700/70 bg-steel-700/70 sm:grid-cols-2 lg:grid-cols-3" data-reveal-group>
+      {
+        federalCustomers.map((c) => (
+          <li class="bg-navy-700 p-5" data-reveal>
+            <p class="font-display text-sm font-600 leading-snug text-mist-50">{c.name}</p>
+            <p class="mono-data mt-1.5 text-steel-400">{c.locality}</p>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="mt-6 max-w-2xl text-xs leading-relaxed text-steel-500" data-reveal>
+      Installations and agencies listed indicate geographic market proximity only.
+      They are not represented as customers or past performance.
+    </p>
+  </Section>
+
+  <!-- Integration band -->
+  <ImageBand
+    src="/band-network.jpg"
+    alt="Orderly fiber-optic network cabling with cool blue connector lights"
+  />
+
+  <!-- Credential portfolio -->
+  <Section surface="mist">
+    <SectionHeading
+      eyebrow="Credential Portfolio"
+      title="Practitioner certifications — held and in progress"
+      lede="Certifications are labeled by their true status. Items marked “in progress” are actively being pursued, not yet held."
+      index="03"
+    />
+    <div class="mt-10 flex flex-wrap gap-2.5" data-reveal>
+      {credentials.map((c) => <CredentialBadge name={c.name} held={c.held} />)}
+    </div>
+  </Section>
+
+  <!-- CTA -->
+  <Section surface="navy">
+    <div class="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between" data-reveal>
+      <h2 class="max-w-xl heading-2 text-mist-50">See how this depth maps to your requirement.</h2>
+      <Cta href="/contact">Request Capability Statement</Cta>
+    </div>
+  </Section>
+</BaseLayout>

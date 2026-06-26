@@ -1,0 +1,91 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ImageHero from "../components/ImageHero.astro";
+import Section from "../components/Section.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import Cta from "../components/Cta.astro";
+import Panel from "../components/Panel.astro";
+import DataTable from "../components/DataTable.astro";
+import CertStatus from "../components/CertStatus.astro";
+import { company, display } from "../config/company";
+import type { Row } from "../components/DataTable.astro";
+
+const entityRows: Row[] = [
+  { label: "Legal name", value: company.legalName },
+  { label: "Doing business as", value: company.dba },
+  { label: "Entity type", value: company.entityType },
+  { label: "State of formation", value: company.state },
+  {
+    label: "Primary NAICS",
+    value: `${company.naicsPrimary} — ${company.naicsPrimaryLabel}`,
+    mono: true,
+    accent: true,
+  },
+  { label: "Unique Entity ID (UEI)", value: display(company.uei)!, mono: true },
+  { label: "CAGE Code", value: display(company.cageCode)!, mono: true },
+  { label: "Business size", value: company.smallBusinessNote },
+  { label: "Principal location", value: company.city },
+];
+---
+
+<BaseLayout
+  title="Corporate Data"
+  description={`Corporate data for ${company.legalName}: entity type, state of formation, NAICS codes, UEI/CAGE, small-business status, and certification standing.`}
+  path="/corporate-data"
+>
+  <ImageHero
+    src="/hero-corporate.jpg"
+    imgAlt="Abstract technical schematic of concentric measurement rings on navy"
+    eyebrow="Corporate Data"
+    title="Registration and certification reference"
+    intro="A single reference for contracting and registration data. Fields not yet assigned are noted as available upon request and will be published as they are issued."
+  />
+
+  <Section surface="mist">
+    <div class="grid gap-10 lg:grid-cols-2 lg:items-start">
+      <!-- Entity & registration in a navy panel (the "system" register) -->
+      <div data-reveal>
+        <Panel tone="dark">
+          <DataTable
+            caption="Entity & Registration"
+            rows={entityRows}
+            tone="dark"
+          />
+        </Panel>
+      </div>
+
+      <!-- Certification standing on light -->
+      <div data-reveal>
+        <SectionHeading eyebrow="Certification Standing" title="Set-aside status" index="01" />
+        <p class="mt-3 max-w-md text-sm leading-relaxed text-steel-600">
+          Each designation is listed with its current, accurate status. Items in
+          process are applications underway, not awarded certifications.
+        </p>
+        <CertStatus tone="light" class="mt-6 sm:grid-cols-1" />
+      </div>
+    </div>
+
+    <!-- Supporting NAICS -->
+    <div class="mt-16" data-reveal>
+      <p class="eyebrow text-signal">Supporting NAICS</p>
+      <ul class="mt-5 grid gap-x-10 gap-y-3 sm:grid-cols-2">
+        {
+          company.naicsSecondary.map((n) => (
+            <li class="flex gap-3 border-t border-mist-200 pt-3 text-sm text-steel-600">
+              <span class="mono-data shrink-0 text-signal">{n.code}</span>
+              <span>{n.label}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </Section>
+
+  <!-- CTA -->
+  <Section surface="navy-700">
+    <div class="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between" data-reveal>
+      <h2 class="max-w-xl heading-2 text-mist-50">Need formal registration documentation?</h2>
+      <Cta href="/contact">Request Capability Statement</Cta>
+    </div>
+  </Section>
+</BaseLayout>

@@ -1,0 +1,87 @@
+---
+import { company, nav, display, hasValue } from "../config/company";
+
+const year = 2026;
+const uei = display(company.uei);
+const cage = display(company.cageCode);
+---
+
+<footer class="border-t border-steel-700/70 bg-ink">
+  <div class="page-rail grid gap-12 py-16 md:grid-cols-[1.4fr_1fr_1fr]">
+    <!-- Identity: the line is "secured" — knot tucked beside the wordmark. -->
+    <div>
+      <div class="flex items-center gap-2.5 text-mist-50">
+        <img src="/logo-mark-sm.png" alt="" width="28" height="28" class="h-7 w-7 shrink-0" />
+        <span class="font-display text-base font-600 tracking-tight">
+          {company.dba}
+        </span>
+      </div>
+      <p class="mt-4 max-w-xs text-sm leading-relaxed text-steel-400">
+        {company.dba} — {company.tagline}
+      </p>
+      <p class="mt-3 text-sm text-steel-500">{company.city}</p>
+    </div>
+
+    <!-- Navigate -->
+    <nav aria-label="Footer">
+      <p class="eyebrow text-steel-500">Navigate</p>
+      <ul class="mt-4 space-y-2.5">
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="text-sm text-steel-300 transition-colors hover:text-mist-50"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <!-- Registrations -->
+    <div>
+      <p class="eyebrow text-steel-500">Registrations</p>
+      <dl class="mt-4 space-y-2.5 text-sm">
+        <div class="flex justify-between gap-4">
+          <dt class="text-steel-500">NAICS</dt>
+          <dd class="mono-data text-steel-300">{company.naicsPrimary}</dd>
+        </div>
+        <div class="flex justify-between gap-4">
+          <dt class="text-steel-500">UEI</dt>
+          <dd class="mono-data text-steel-300">{uei}</dd>
+        </div>
+        <div class="flex justify-between gap-4">
+          <dt class="text-steel-500">CAGE</dt>
+          <dd class="mono-data text-steel-300">{cage}</dd>
+        </div>
+        {
+          hasValue(company.email) && (
+            <div class="flex justify-between gap-4">
+              <dt class="text-steel-500">Email</dt>
+              <dd>
+                <a
+                  href={`mailto:${company.email}`}
+                  class="text-steel-300 transition-colors hover:text-mist-50"
+                >
+                  {company.email}
+                </a>
+              </dd>
+            </div>
+          )
+        }
+      </dl>
+    </div>
+  </div>
+
+  <div class="border-t border-steel-700/50">
+    <div
+      class="page-rail flex flex-col gap-2 py-5 text-xs text-steel-500 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p>© {year} {company.legalName}. All rights reserved.</p>
+      <p class="mono-data">{company.entityType} · State of {company.state}</p>
+    </div>
+  </div>
+</footer>

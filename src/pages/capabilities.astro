@@ -1,0 +1,77 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ImageHero from "../components/ImageHero.astro";
+import Section from "../components/Section.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import Cta from "../components/Cta.astro";
+import Panel from "../components/Panel.astro";
+import CompetencyLedger from "../components/CompetencyLedger.astro";
+import CredentialBadge from "../components/CredentialBadge.astro";
+import { company, competencies, credentials } from "../config/company";
+
+const held = credentials.filter((c) => c.held);
+const inProgress = credentials.filter((c) => !c.held);
+---
+
+<BaseLayout
+  title="Capabilities"
+  description={`Core competencies of ${company.dba}: cloud architecture, cybersecurity, systems integration, custom software, DevSecOps, IT service management, and federal IT consulting.`}
+  path="/capabilities"
+>
+  <ImageHero
+    src="/hero-capabilities.jpg"
+    imgAlt="Network operations center at dusk, monitor wall glowing cool blue"
+    eyebrow="Capabilities"
+    title="Core competencies across the federal IT lifecycle"
+    intro="Bowline Federal delivers eight interlocking disciplines. Each is staffed to federal security, accessibility, and documentation standards — from initial architecture through sustained operations."
+  />
+
+  <Section surface="mist">
+    <SectionHeading
+      eyebrow="The Eight Disciplines"
+      title="What the work actually is"
+      index="01"
+    />
+    <div class="mt-12">
+      <CompetencyLedger items={competencies} detailed />
+    </div>
+  </Section>
+
+  <!-- Standards + credentials -->
+  <Section surface="navy-700">
+    <SectionHeading
+      eyebrow="Standards & Credentials"
+      title="Engineered to federal standards, by credentialed practitioners"
+      lede="Work is delivered against NIST 800-53, RMF, Zero Trust, and Section 508 / WCAG. The practitioner credential portfolio is shown by its true status."
+      tone="dark"
+      index="02"
+    />
+    <div class="mt-10 grid gap-8 md:grid-cols-2" data-reveal-group>
+      <Panel tone="dark" data-reveal>
+        <p class="eyebrow text-signal-bright">Held</p>
+        <div class="mt-4 flex flex-wrap gap-2.5">
+          {held.map((c) => <CredentialBadge name={c.name} held tone="dark" />)}
+        </div>
+      </Panel>
+      <Panel tone="dark" data-reveal>
+        <p class="eyebrow text-steel-400">In progress</p>
+        <div class="mt-4 flex flex-wrap gap-2.5">
+          {inProgress.map((c) => <CredentialBadge name={c.name} held={false} tone="dark" />)}
+        </div>
+      </Panel>
+    </div>
+  </Section>
+
+  <!-- CTA -->
+  <Section surface="navy">
+    <div class="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between" data-reveal>
+      <div class="max-w-xl">
+        <h2 class="heading-2 text-mist-50">Need a tailored capability statement?</h2>
+        <p class="mt-3 text-base text-steel-400">
+          We will map these competencies to your specific requirement.
+        </p>
+      </div>
+      <Cta href="/contact">Request Capability Statement</Cta>
+    </div>
+  </Section>
+</BaseLayout>

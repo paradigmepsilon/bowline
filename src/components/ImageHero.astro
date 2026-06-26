@@ -1,0 +1,62 @@
+---
+/**
+ * Full-bleed image hero — a cinematic brand image behind a left-anchored navy
+ * scrim, with the eyebrow + title + intro overlaid on the legible left third.
+ * The image's own cool window-glow is the band's accent, so no separate Signal
+ * element sits inside it (avoids doubled blue). Entity-neutral imagery.
+ *
+ * Used as the hero on interior pages (and, with `large`, the home hero).
+ */
+interface Props {
+  src: string;
+  /** Honest, entity-neutral image description. */
+  imgAlt?: string;
+  eyebrow: string;
+  title: string;
+  intro?: string;
+  /** Heading level — h1 for page heroes. */
+  as?: "h1" | "h2";
+  /** Taller hero for the home page. */
+  large?: boolean;
+  /** Display the title at hero (display-xl) scale. */
+  display?: boolean;
+}
+const {
+  src,
+  imgAlt = "",
+  eyebrow,
+  title,
+  intro,
+  as = "h1",
+  large = false,
+  display = false,
+} = Astro.props;
+
+const Title = as;
+const minH = large ? "min-h-[78vh] lg:min-h-[86vh]" : "min-h-[44vh] lg:min-h-[52vh]";
+const titleClass = display ? "display-xl" : "display-lg";
+---
+
+<section class:list={["relative isolate flex items-center overflow-hidden bg-navy", minH]}>
+  <!-- Background image -->
+  <img
+    src={src}
+    alt={imgAlt}
+    class="absolute inset-0 -z-10 h-full w-full object-cover"
+    fetchpriority={large ? "high" : undefined}
+  />
+  <!-- Left-anchored navy scrim for legibility -->
+  <div class="absolute inset-0 -z-10" style="background: var(--scrim-left)"></div>
+  <!-- A thin top+bottom hairline frames the band, consistent with the system -->
+  <div class="absolute inset-x-0 top-0 -z-10 h-px bg-steel-700/70"></div>
+  <div class="absolute inset-x-0 bottom-0 -z-10 h-px bg-steel-700/70"></div>
+
+  <div class="page-rail w-full py-20 sm:py-24">
+    <div class="max-w-2xl" data-reveal-group>
+      <p class="eyebrow text-signal-bright" data-reveal>{eyebrow}</p>
+      <Title class:list={["mt-5 text-mist-50", titleClass]} data-reveal>{title}</Title>
+      {intro && <p class="mt-5 lede max-w-xl text-steel-300" data-reveal>{intro}</p>}
+      <slot />
+    </div>
+  </div>
+</section>

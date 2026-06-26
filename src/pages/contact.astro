@@ -1,0 +1,76 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ImageHero from "../components/ImageHero.astro";
+import Section from "../components/Section.astro";
+import Panel from "../components/Panel.astro";
+import ContactForm from "../components/ContactForm.astro";
+import { company, hasValue } from "../config/company";
+
+const hasContactChannel = hasValue(company.email) || hasValue(company.phone);
+---
+
+<BaseLayout
+  title="Contact"
+  description={`Contact ${company.dba} to request a capability statement or discuss a federal IT requirement or teaming opportunity.`}
+  path="/contact"
+>
+  <ImageHero
+    src="/hero-contact.jpg"
+    imgAlt="Entrance to a modern secure technology facility at dusk"
+    eyebrow="Contact"
+    title="Request a capability statement"
+    intro="Tell us about your requirement or teaming opportunity. We respond with the documentation your evaluation needs."
+  />
+
+  <Section surface="mist">
+    <div class="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-start">
+      <div data-reveal>
+        <ContactForm />
+      </div>
+
+      <aside data-reveal>
+        <Panel tone="light">
+          <h2 class="font-display text-lg font-600 text-navy">Direct contact</h2>
+          {
+            hasContactChannel ? (
+              <dl class="mt-5 space-y-5 text-sm">
+                {hasValue(company.email) && (
+                  <div>
+                    <dt class="eyebrow text-steel-600">Email</dt>
+                    <dd class="mt-1.5">
+                      <a href={`mailto:${company.email}`} class="text-signal hover:text-signal-dim">
+                        {company.email}
+                      </a>
+                    </dd>
+                  </div>
+                )}
+                {hasValue(company.phone) && (
+                  <div>
+                    <dt class="eyebrow text-steel-600">Phone</dt>
+                    <dd class="mt-1.5">
+                      <a
+                        href={`tel:${company.phone.replace(/[^+\d]/g, "")}`}
+                        class="text-signal hover:text-signal-dim"
+                      >
+                        {company.phone}
+                      </a>
+                    </dd>
+                  </div>
+                )}
+              </dl>
+            ) : (
+              <p class="mt-4 text-sm leading-relaxed text-steel-600">
+                A dedicated contact line is being established. In the meantime,
+                please use the request form and we will respond promptly.
+              </p>
+            )
+          }
+          <div class="mt-6 border-t border-mist-200 pt-6 text-sm">
+            <dt class="eyebrow text-steel-600">Location</dt>
+            <dd class="mt-1.5 text-navy">{company.city}</dd>
+          </div>
+        </Panel>
+      </aside>
+    </div>
+  </Section>
+</BaseLayout>

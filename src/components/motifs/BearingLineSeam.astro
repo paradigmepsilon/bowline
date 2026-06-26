@@ -1,0 +1,56 @@
+---
+/**
+ * The Bearing Line — the brand signature. A single rope spans the section,
+ * runs level, and ties exactly one bowline knot at the load-bearing point, then
+ * continues out. The one crossing strand at the knot is Signal Blue: the line
+ * holding under load. "Secure under load."
+ *
+ * Rendered as a wide, short SVG that the section places full-rail-width. The
+ * knot sits at `position` (0–1) across the span. Decorative (aria-hidden).
+ */
+interface Props {
+  class?: string;
+  /** Horizontal position of the knot across the line, 0 (left) to 1 (right). */
+  position?: number;
+}
+const { class: className, position = 0.5 } = Astro.props;
+// viewBox is 1000 wide; clamp the knot center into a sensible range.
+const cx = Math.max(120, Math.min(880, position * 1000));
+---
+
+<svg
+  class={className}
+  viewBox="0 0 1000 48"
+  fill="none"
+  aria-hidden="true"
+  preserveAspectRatio="none"
+>
+  <!-- standing line, left of the knot -->
+  <path
+    d={`M0 24 H${cx - 26}`}
+    stroke="var(--color-steel-700)"
+    stroke-width="2"
+    stroke-linecap="round"
+  />
+  <!-- standing line, right of the knot -->
+  <path
+    d={`M${cx + 26} 24 H1000`}
+    stroke="var(--color-steel-700)"
+    stroke-width="2"
+    stroke-linecap="round"
+  />
+  <!-- the bowline eye (steel loop) -->
+  <path
+    d={`M${cx - 26} 24 a13 13 0 1 0 0.01 0`}
+    stroke="var(--color-steel-500)"
+    stroke-width="2"
+    fill="none"
+  />
+  <!-- the bight crossing the eye — the single Signal-Blue strand under load -->
+  <path
+    d={`M${cx - 18} 16 C${cx - 4} 26 ${cx + 4} 22 ${cx + 18} 32`}
+    stroke="var(--color-signal)"
+    stroke-width="2.4"
+    stroke-linecap="round"
+  />
+</svg>

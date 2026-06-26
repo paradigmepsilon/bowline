@@ -1,0 +1,40 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Cta from "../components/Cta.astro";
+import BlueprintGrid from "../components/motifs/BlueprintGrid.astro";
+import { company, nav } from "../config/company";
+---
+
+<BaseLayout
+  title="Page Not Found"
+  description="The requested page could not be found."
+  path="/404"
+>
+  <section class="relative flex min-h-[70dvh] items-center overflow-hidden bg-navy py-20">
+    <div class="pointer-events-none absolute inset-0 opacity-[0.10]" aria-hidden="true">
+      <BlueprintGrid class="h-full w-full" />
+    </div>
+    <div class="page-rail relative">
+      <div class="max-w-xl">
+        <p class="font-display text-6xl font-700 text-steel-700 sm:text-7xl">404</p>
+        <h1 class="mt-4 display-lg text-mist-50">This page could not be located.</h1>
+        <p class="mt-5 lede text-steel-300">
+          The page you requested may have moved. Use a link below, or return to
+          the {company.shortName} home page.
+        </p>
+        <nav aria-label="Recovery" class="mt-8 flex flex-wrap gap-x-6 gap-y-2">
+          {
+            nav.map((item) => (
+              <a href={item.href} class="text-sm text-steel-300 transition-colors hover:text-mist-50">
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+        <div class="mt-9">
+          <Cta href="/">Return home</Cta>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,145 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { company, hasValue } from "../config/company";
+
+export interface Props {
+  title: string;
+  description: string;
+  /** Path-only canonical, e.g. "/capabilities". Defaults to current path. */
+  path?: string;
+}
+
+const { title, description, path } = Astro.props;
+
+const canonicalURL = new URL(path ?? Astro.url.pathname, Astro.site);
+const ogImage = new URL("/og-default.svg", Astro.site);
+const fullTitle =
+  title === company.shortName ? title : `${title} · ${company.shortName}`;
+
+// Organization structured data — legal name, market, contact (when populated).
+const orgSchema: Record<string, unknown> = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: company.dba,
+  legalName: company.legalName,
+  url: Astro.site?.toString(),
+  slogan: company.tagline,
+  description: company.positioning,
+  foundingDate: company.founded,
+  areaServed: company.areaServed,
+  address: {
+    "@type": "PostalAddress",
+    addressRegion: company.stateAbbr,
+    addressCountry: "US",
+  },
+  knowsAbout: [
+    "Federal information technology",
+    "Cloud architecture",
+    "Cybersecurity engineering",
+    "Systems integration",
+    "DevSecOps",
+  ],
+};
+if (hasValue(company.email) || hasValue(company.phone)) {
+  orgSchema.contactPoint = {
+    "@type": "ContactPoint",
+    contactType: "sales",
+    ...(hasValue(company.email) ? { email: company.email } : {}),
+    ...(hasValue(company.phone) ? { telephone: company.phone } : {}),
+  };
+}
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="canonical" href={canonicalURL} />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#14243a" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={company.dba} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImage} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(orgSchema)}
+    />
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-signal focus:px-4 focus:py-2 focus:text-white"
+      >Skip to content</a
+    >
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+
+    <!--
+      Restrained scroll-reveal. Adds .is-visible to [data-reveal] elements as
+      they enter the viewport. CSS handles the actual transition and the
+      prefers-reduced-motion override, so this stays tiny and progressive —
+      with JS disabled, [data-reveal] simply renders visible (see noscript).
+    -->
+    <script is:inline>
+      (function () {
+        var reduce =
+          window.matchMedia &&
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var nodes = document.querySelectorAll("[data-reveal]");
+        if (reduce || !("IntersectionObserver" in window)) {
+          nodes.forEach(function (n) {
+            n.classList.add("is-visible");
+          });
+          return;
+        }
+        var io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { rootMargin: "0px 0px -10% 0px", threshold: 0.1 },
+        );
+        nodes.forEach(function (n) {
+          io.observe(n);
+        });
+      })();
+    </script>
+    <noscript>
+      <style>
+        [data-reveal] {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      </style>
+    </noscript>
+  </body>
+</html>

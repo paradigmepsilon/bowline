@@ -1,0 +1,39 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Cta from "../components/Cta.astro";
+import { company } from "../config/company";
+---
+
+<BaseLayout
+  title="Request Received"
+  description={`Your request to ${company.dba} has been received.`}
+  path="/thank-you"
+>
+  <section class="relative isolate flex min-h-[70dvh] items-center overflow-hidden bg-navy py-20">
+    <img
+      src="/hero-thankyou.jpg"
+      alt="Calm dusk horizon over a technology campus reflected in still water"
+      class="absolute inset-0 -z-10 h-full w-full object-cover"
+    />
+    <div class="absolute inset-0 -z-10" style="background: var(--scrim-left)"></div>
+    <div class="page-rail">
+      <div class="max-w-xl">
+        <img src="/logo-mark-sm.png" alt="" width="48" height="48" class="h-12 w-12" />
+        <p class="mt-6 eyebrow text-signal-bright">Request received</p>
+        <h1 class="mt-4 display-lg text-mist-50">
+          Thank you. Your request has been received.
+        </h1>
+        <p class="mt-5 lede text-steel-300">
+          A representative of {company.dba} will review your inquiry and
+          respond with the requested documentation. We appreciate your interest.
+        </p>
+        <div class="mt-9 flex flex-wrap gap-3">
+          <Cta href="/">Return home</Cta>
+          <Cta href="/capabilities" variant="secondary" tone="dark" arrow>
+            Review capabilities
+          </Cta>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

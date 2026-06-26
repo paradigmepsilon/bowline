@@ -1,0 +1,26 @@
+---
+import type { Competency } from "../config/company";
+import CompetencyItem from "./CompetencyItem.astro";
+
+/**
+ * The competency ledger — one bordered register of disciplines with shared
+ * hairline dividers between every cell (a gap-px grid over a mist-200 ground).
+ * Explicitly NOT a row of 3 equal floating cards. 2 columns desktop, 1 mobile.
+ */
+interface Props {
+  items: ReadonlyArray<Competency>;
+  detailed?: boolean;
+  class?: string;
+}
+const { items, detailed = false, class: className } = Astro.props;
+---
+
+<div
+  class:list={[
+    "grid grid-cols-1 gap-px overflow-hidden rounded border border-mist-200 bg-mist-200 sm:grid-cols-2",
+    className,
+  ]}
+  data-reveal-group
+>
+  {items.map((competency, i) => <CompetencyItem competency={competency} index={i} detailed={detailed} />)}
+</div>

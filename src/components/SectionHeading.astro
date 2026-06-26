@@ -1,0 +1,42 @@
+---
+/**
+ * Section opener — mono eyebrow + display heading + optional lede, with an
+ * optional functional section locator (e.g. "S/02") echoing the board's page
+ * markers. Honest locator, not a faux "// YEAR" stamp.
+ */
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lede?: string;
+  tone?: "light" | "dark";
+  as?: "h1" | "h2";
+  /** Functional section locator, e.g. "02" → renders "S/02". */
+  index?: string;
+  class?: string;
+}
+const {
+  eyebrow,
+  title,
+  lede,
+  tone = "light",
+  as = "h2",
+  index,
+  class: className,
+} = Astro.props;
+
+const Title = as;
+const eyebrowColor = tone === "dark" ? "text-signal-bright" : "text-signal";
+const titleColor = tone === "dark" ? "text-mist-50" : "text-navy";
+const ledeColor = tone === "dark" ? "text-steel-300" : "text-steel-600";
+const locatorColor = tone === "dark" ? "text-steel-500" : "text-steel-600";
+const titleClass = as === "h1" ? "display-lg" : "heading-2";
+---
+
+<div class:list={["max-w-3xl", className]} data-reveal>
+  <div class="flex items-baseline justify-between gap-4">
+    {eyebrow && <p class:list={["eyebrow", eyebrowColor]}>{eyebrow}</p>}
+    {index && <span class:list={["mono-data shrink-0", locatorColor]}>S/{index}</span>}
+  </div>
+  <Title class:list={["mt-4", titleClass, titleColor]}>{title}</Title>
+  {lede && <p class:list={["mt-4 lede max-w-2xl", ledeColor]}>{lede}</p>}
+</div>

@@ -1,0 +1,73 @@
+---
+import { company, nav } from "../config/company";
+
+const current = Astro.url.pathname.replace(/\/$/, "") || "/";
+const isActive = (href: string) => current === href.replace(/\/$/, "");
+---
+
+<header
+  class="sticky top-0 z-40 border-b border-steel-700/70 bg-navy/95 backdrop-blur"
+>
+  <div class="page-rail flex h-16 items-center justify-between gap-4">
+    <a
+      href="/"
+      class="group flex items-center gap-2.5 text-mist-50"
+      aria-label={`${company.dba} — home`}
+    >
+      <img
+        src="/logo-mark-sm.png"
+        alt=""
+        width="28"
+        height="28"
+        class="h-7 w-7 shrink-0"
+      />
+      <span class="font-display text-base font-600 tracking-tight text-mist-50"
+        >{company.dba}</span
+      >
+    </a>
+
+    <!-- CSS-only mobile menu: a hidden checkbox toggles the panel; no JS. -->
+    <input type="checkbox" id="nav-toggle" class="peer sr-only" />
+    <label
+      for="nav-toggle"
+      class="flex h-11 w-11 cursor-pointer items-center justify-center rounded text-steel-300 hover:bg-steel-700/40 md:hidden"
+      aria-label="Toggle navigation menu"
+    >
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path
+          d="M3 6h18M3 12h18M3 18h18"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"></path>
+      </svg>
+    </label>
+
+    <nav
+      aria-label="Primary"
+      class="absolute inset-x-0 top-16 hidden flex-col gap-1 border-b border-steel-700/70 bg-navy px-6 pb-6 pt-2 peer-checked:flex md:static md:flex md:flex-row md:items-center md:gap-1 md:border-0 md:bg-transparent md:p-0"
+    >
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            aria-current={isActive(item.href) ? "page" : undefined}
+            class:list={[
+              "flex min-h-11 items-center rounded px-3 text-sm font-500 transition-colors md:min-h-0 md:py-2",
+              isActive(item.href)
+                ? "text-mist-50 md:text-signal-bright"
+                : "text-steel-300 hover:text-mist-50",
+            ]}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <a
+        href="/contact"
+        class="mt-2 inline-flex min-h-11 items-center justify-center rounded bg-signal px-4 text-sm font-600 text-white transition-colors hover:bg-signal-bright active:translate-y-px md:mt-0 md:ml-2"
+      >
+        Request Capability Statement
+      </a>
+    </nav>
+  </div>
+</header>

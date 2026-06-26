@@ -1,0 +1,53 @@
+---
+/** Primary/secondary action link. Flat, tactile press, no glow. */
+interface Props {
+  href: string;
+  variant?: "primary" | "secondary";
+  /** Outline color context for the secondary variant. */
+  tone?: "light" | "dark";
+  /** Show a trailing arrow affordance. */
+  arrow?: boolean;
+  class?: string;
+}
+const {
+  href,
+  variant = "primary",
+  tone = "light",
+  arrow = false,
+  class: className,
+} = Astro.props;
+
+const base =
+  "group inline-flex min-h-11 items-center justify-center gap-2 rounded px-6 text-sm font-600 transition-colors active:translate-y-px";
+
+const styles =
+  variant === "primary"
+    ? "bg-signal text-white hover:bg-signal-bright"
+    : tone === "dark"
+      ? "border border-steel-500 text-mist-100 hover:border-mist-50 hover:text-white"
+      : "border border-steel-500 text-navy hover:border-navy";
+---
+
+<a href={href} class:list={[base, styles, className]}>
+  <slot />
+  {
+    arrow && (
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+        aria-hidden="true"
+        class="transition-transform group-hover:translate-x-0.5"
+      >
+        <path
+          d="M3 8h10M9 4l4 4-4 4"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    )
+  }
+</a>

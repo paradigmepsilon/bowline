@@ -1,0 +1,53 @@
+---
+/**
+ * Monoline system icons from the brand-kit's icon row — shield, lock, node,
+ * knot. 1.5px stroke, currentColor (steel), no fill, no emoji. Decorative
+ * markers; the parent provides an accessible label where meaning matters.
+ */
+interface Props {
+  name: "shield" | "lock" | "node" | "knot";
+  class?: string;
+}
+const { name, class: className } = Astro.props;
+---
+
+<svg
+  class={className}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+>
+  {name === "shield" && <path d="M12 3 19 6v5c0 4.4-3 7.4-7 9-4-1.6-7-4.6-7-9V6l7-3Z" />}
+  {
+    name === "lock" && (
+      <>
+        <rect x="5" y="11" width="14" height="9" rx="1.5" />
+        <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+      </>
+    )
+  }
+  {
+    name === "node" && (
+      <>
+        <circle cx="12" cy="12" r="2.5" />
+        <circle cx="5" cy="5" r="1.6" />
+        <circle cx="19" cy="5" r="1.6" />
+        <circle cx="5" cy="19" r="1.6" />
+        <circle cx="19" cy="19" r="1.6" />
+        <path d="M10.3 10.3 6.2 6.2M13.7 10.3l4.1-4.1M10.3 13.7l-4.1 4.1M13.7 13.7l4.1 4.1" />
+      </>
+    )
+  }
+  {
+    name === "knot" && (
+      <>
+        <path d="M7 9a4 4 0 1 1 5.5 3.7" />
+        <path d="M17 15a4 4 0 1 1-5.5-3.7" />
+      </>
+    )
+  }
+</svg>

@@ -1,0 +1,30 @@
+---
+/**
+ * Faint engineering-drawing grid — the brand-kit's logo-construction backdrop.
+ * Decorative only (aria-hidden), inline SVG, no network request.
+ */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<svg
+  class={className}
+  viewBox="0 0 600 600"
+  fill="none"
+  aria-hidden="true"
+  preserveAspectRatio="xMidYMid slice"
+>
+  <defs>
+    <pattern id="bft-blueprint" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="var(--color-steel-500)" stroke-width="0.5"></path>
+    </pattern>
+  </defs>
+  <rect width="600" height="600" fill="url(#bft-blueprint)" opacity="0.25"></rect>
+  <!-- a few measure ticks, like a construction sheet -->
+  <g stroke="var(--color-steel-500)" stroke-width="0.75" opacity="0.4">
+    <line x1="0" y1="300" x2="600" y2="300"></line>
+    <line x1="300" y1="0" x2="300" y2="600"></line>
+  </g>
+</svg>

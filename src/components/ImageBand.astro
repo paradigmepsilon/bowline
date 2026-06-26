@@ -1,0 +1,41 @@
+---
+/**
+ * Full-bleed atmospheric image band — the brand's cinematic dusk-facility
+ * register. A left-anchored navy scrim keeps any caption legible while the
+ * image's own cool window-glow survives as that band's accent (so no doubled
+ * blue). Fixed aspect-ratio prevents layout shift. Image is custom-generated,
+ * entity-neutral (no place names, agencies, people, or other-entity reference).
+ */
+interface Props {
+  src: string;
+  alt: string;
+  caption?: string;
+  /** Tailwind aspect ratio utility, default a cinematic band. */
+  ratio?: string;
+}
+const { src, alt, caption, ratio = "aspect-[21/9]" } = Astro.props;
+---
+
+<div class="relative w-full overflow-hidden border-y border-steel-700/70 bg-navy">
+  <div class:list={["relative w-full", ratio]}>
+    <img
+      src={src}
+      alt={alt}
+      loading="lazy"
+      decoding="async"
+      class="absolute inset-0 h-full w-full object-cover"
+    />
+    {
+      caption && (
+        <div
+          class="absolute inset-0 flex items-end"
+          style="background: var(--scrim-left)"
+        >
+          <div class="page-rail w-full pb-6">
+            <p class="eyebrow text-steel-300">{caption}</p>
+          </div>
+        </div>
+      )
+    }
+  </div>
+</div>

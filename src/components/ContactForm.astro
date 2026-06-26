@@ -1,0 +1,106 @@
+---
+import { company } from "../config/company";
+
+/**
+ * Capability-statement request form. Posts to Web3Forms using a BFT-DEDICATED
+ * access key, independent of the hosting account and of any other entity.
+ * Replace `company.web3formsKey` (src/config/company.ts) with the real key
+ * before launch; until then the endpoint returns a 4xx (expected). See README.
+ *
+ * TODO (Unified Ops rollup — NOT built here): Web3Forms retains every
+ * submission in its own dashboard/API. A future, separate job can read the
+ * submission COUNT (a single integer, no PII) and report it as a UO rollup
+ * metric. Do not add a UO integration in this static site, and never forward
+ * submitter PII to UO.
+ */
+const redirectURL = new URL("/thank-you", Astro.site).toString();
+
+const field =
+  "mt-2 w-full rounded border border-mist-200 bg-paper px-4 py-3 text-navy placeholder:text-steel-500 focus:border-signal focus:outline-none focus:ring-2 focus:ring-signal/30";
+const label = "block text-sm font-500 text-navy";
+---
+
+<form action="https://api.web3forms.com/submit" method="POST" class="space-y-6">
+  <input type="hidden" name="access_key" value={company.web3formsKey} />
+  <input
+    type="hidden"
+    name="subject"
+    value="Capability statement request — Bowline Federal"
+  />
+  <input type="hidden" name="from_name" value={company.dba} />
+  <input type="hidden" name="redirect" value={redirectURL} />
+
+  <!-- Honeypot: bots fill this; humans never see it. -->
+  <input
+    type="checkbox"
+    name="botcheck"
+    tabindex="-1"
+    autocomplete="off"
+    class="hidden"
+    aria-hidden="true"
+  />
+
+  <div>
+    <label for="name" class={label}>Name <span class="text-signal">*</span></label>
+    <input
+      id="name"
+      name="name"
+      type="text"
+      required
+      autocomplete="name"
+      class={field}
+      placeholder="Full name"
+    />
+  </div>
+
+  <div>
+    <label for="organization" class={label}>
+      Agency or company <span class="text-signal">*</span>
+    </label>
+    <input
+      id="organization"
+      name="organization"
+      type="text"
+      required
+      autocomplete="organization"
+      class={field}
+      placeholder="Agency, office, or prime contractor"
+    />
+  </div>
+
+  <div>
+    <label for="email" class={label}>Email <span class="text-signal">*</span></label>
+    <input
+      id="email"
+      name="email"
+      type="email"
+      required
+      autocomplete="email"
+      class={field}
+      placeholder="name@agency.gov"
+    />
+  </div>
+
+  <div>
+    <label for="message" class={label}>Message <span class="text-signal">*</span></label>
+    <textarea
+      id="message"
+      name="message"
+      rows="5"
+      required
+      class={field}
+      placeholder="Describe your requirement, contract vehicle, or teaming interest."
+    ></textarea>
+  </div>
+
+  <button
+    type="submit"
+    class="inline-flex min-h-11 items-center justify-center rounded bg-signal px-7 text-sm font-600 text-white transition-colors hover:bg-signal-bright active:translate-y-px"
+  >
+    Send request
+  </button>
+  <p class="text-xs text-steel-600">
+    Fields marked with <span class="text-signal">*</span> are required. We use your
+    information only to respond to your inquiry.
+  </p>
+</form>

@@ -1,0 +1,42 @@
+---
+import type { Competency } from "../config/company";
+
+/**
+ * One row in the competency ledger. Mono index, Sora title, summary, and (when
+ * detailed) the capability bullets. Hover lifts the left edge to Signal Blue —
+ * no shadow bloom, no scale. Bordered ledger cell, not a floating card.
+ */
+interface Props {
+  competency: Competency;
+  index: number;
+  detailed?: boolean;
+}
+const { competency, index, detailed = false } = Astro.props;
+const numeral = String(index + 1).padStart(2, "0");
+---
+
+<article
+  id={competency.id}
+  class="group relative flex h-full flex-col border-l-2 border-l-transparent bg-paper p-6 transition-colors hover:border-l-signal sm:p-7"
+  data-reveal
+>
+  <div class="flex items-baseline gap-3">
+    <span class="mono-data font-500 text-signal">{numeral}</span>
+    <h3 class="font-display text-lg font-600 leading-snug text-navy">
+      {competency.title}
+    </h3>
+  </div>
+  <p class="mt-3 text-sm leading-relaxed text-steel-600">{competency.summary}</p>
+  {
+    detailed && (
+      <ul class="mt-5 space-y-2 border-t border-mist-200 pt-5">
+        {competency.points.map((point) => (
+          <li class="flex gap-2.5 text-sm leading-relaxed text-navy">
+            <span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-signal" aria-hidden="true" />
+            <span>{point}</span>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</article>

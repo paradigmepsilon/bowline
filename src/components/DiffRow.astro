@@ -1,0 +1,57 @@
+---
+import type { Differentiator } from "../config/company";
+import LineIcon from "./motifs/LineIcon.astro";
+
+/**
+ * One differentiator as a zig-zag row: mono index + title + body on one side,
+ * a quiet monoline icon on the other. Alternates sides via `flip`. Not a card.
+ */
+interface Props {
+  differentiator: Differentiator;
+  index: number;
+  flip?: boolean;
+  icon: "shield" | "lock" | "node" | "knot";
+  tone?: "light" | "dark";
+}
+const { differentiator, index, flip = false, icon, tone = "light" } = Astro.props;
+const numeral = String(index + 1).padStart(2, "0");
+
+const titleColor = tone === "dark" ? "text-mist-50" : "text-navy";
+const bodyColor = tone === "dark" ? "text-steel-300" : "text-steel-600";
+const iconColor = tone === "dark" ? "text-steel-500" : "text-steel-500";
+const ruleColor = tone === "dark" ? "border-steel-700" : "border-mist-200";
+---
+
+<div
+  class:list={[
+    "grid items-center gap-8 border-t py-10 md:grid-cols-12 md:gap-12",
+    ruleColor,
+  ]}
+  data-reveal
+>
+  <div
+    class:list={[
+      "md:col-span-8",
+      flip ? "md:order-2 md:col-start-5" : "md:order-1",
+    ]}
+  >
+    <div class="flex items-baseline gap-4">
+      <span class="mono-data font-500 text-signal">{numeral}</span>
+      <h3 class:list={["font-display text-xl font-600 sm:text-2xl", titleColor]}>
+        {differentiator.title}
+      </h3>
+    </div>
+    <p class:list={["mt-4 max-w-xl leading-relaxed", bodyColor]}>
+      {differentiator.body}
+    </p>
+  </div>
+  <div
+    class:list={[
+      "hidden md:col-span-3 md:flex",
+      flip ? "md:order-1 md:justify-start" : "md:order-2 md:col-start-10 md:justify-end",
+    ]}
+    aria-hidden="true"
+  >
+    <LineIcon name={icon} class:list={["h-12 w-12", iconColor]} />
+  </div>
+</div>

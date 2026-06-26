@@ -1,0 +1,153 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Section from "../components/Section.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import Cta from "../components/Cta.astro";
+import Panel from "../components/Panel.astro";
+import CompetencyLedger from "../components/CompetencyLedger.astro";
+import CertStatus from "../components/CertStatus.astro";
+import ImageBand from "../components/ImageBand.astro";
+import DiffRow from "../components/DiffRow.astro";
+import SecureCoreNetwork from "../components/motifs/SecureCoreNetwork.astro";
+import { company, competencies, certifications, differentiators } from "../config/company";
+
+const summaryCompetencies = competencies.slice(0, 6);
+const teaserDiffs = differentiators.slice(0, 3);
+const diffIcons = ["shield", "knot", "node"] as const;
+---
+
+<BaseLayout
+  title={company.shortName}
+  description={`${company.dba} — ${company.tagline} ${company.positioning}`}
+  path="/"
+>
+  <!-- Hero — asymmetric, left-aligned, big quiet knot in the negative space. -->
+  <section class="relative isolate overflow-hidden bg-navy">
+    <!-- Cinematic facility backdrop + left-anchored navy scrim for legibility -->
+    <img
+      src="/facility-dusk.jpg"
+      alt="Secure technology facility at dusk, windows lit cool blue"
+      fetchpriority="high"
+      class="absolute inset-0 -z-10 h-full w-full object-cover"
+    />
+    <div class="absolute inset-0 -z-10" style="background: var(--scrim-left)"></div>
+
+    <div class="page-rail relative pb-16 pt-20 sm:pt-28 lg:pb-24 lg:pt-32">
+      <div class="max-w-2xl" data-reveal-group>
+        <p class="eyebrow text-signal-bright" data-reveal>{company.positioningShort}</p>
+        <h1 class="mt-5 display-xl text-mist-50" data-reveal>{company.dba}</h1>
+        <p class="mt-6 lede max-w-xl text-steel-300" data-reveal>{company.tagline}</p>
+        <p class="mt-4 max-w-xl text-base leading-relaxed text-steel-400" data-reveal>
+          {company.positioning}
+        </p>
+        <div class="mt-9 flex flex-wrap gap-3" data-reveal>
+          <Cta href="/contact">Request Capability Statement</Cta>
+          <Cta href="/capabilities" variant="secondary" tone="dark" arrow>
+            View Capabilities
+          </Cta>
+        </div>
+      </div>
+
+      <!-- Honest set-aside ribbon: every channel tagged "in process". -->
+      <div class="mt-14 border-t border-steel-700/70 pt-6" data-reveal>
+        <ul class="flex flex-wrap items-center gap-x-6 gap-y-2">
+          {
+            certifications.map((cert) => (
+              <li class="flex items-center gap-2">
+                <span class="mono-data text-steel-300">{cert.name}</span>
+                <span class="mono-data text-[0.65rem] uppercase tracking-wide text-steel-500">
+                  in process
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core competency ledger (6 of 8) -->
+  <Section surface="mist">
+    <SectionHeading
+      eyebrow="Core Competencies"
+      title="Engineering and advisory across the federal IT lifecycle"
+      lede="Eight disciplines spanning architecture, security, delivery, and operations — the depth to design, build, secure, and run mission systems."
+      index="01"
+    />
+    <div class="mt-12">
+      <CompetencyLedger items={summaryCompetencies} />
+    </div>
+    <div class="mt-8" data-reveal>
+      <Cta href="/capabilities" variant="secondary" arrow>All eight competencies</Cta>
+    </div>
+  </Section>
+
+  <!-- Cinematic infrastructure band -->
+  <ImageBand
+    src="/server-hall.jpg"
+    alt="Secure server hall with cool blue edge lighting"
+    caption="Built for mission systems — secure, available, under load"
+  />
+
+  <!-- Set-aside positioning + honest cert stack -->
+  <Section surface="navy-700">
+    <div class="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+      <div class="relative">
+        <SectionHeading
+          eyebrow="Set-Aside Positioning"
+          title="A multi-category small-business certification path"
+          lede="Bowline Federal is positioned to support agency small-business and socioeconomic goals across several set-aside channels. Each designation is shown with its current, accurate standing."
+          tone="dark"
+          index="02"
+        />
+        <div class="mt-8" data-reveal>
+          <Cta href="/corporate-data" variant="secondary" tone="dark" arrow>
+            Corporate data &amp; status
+          </Cta>
+        </div>
+        <SecureCoreNetwork
+          class="pointer-events-none mt-12 hidden h-40 w-40 opacity-60 lg:block"
+        />
+      </div>
+      <CertStatus tone="dark" />
+    </div>
+  </Section>
+
+  <!-- Differentiators teaser, opened by a Bearing-Line seam -->
+  <Section surface="mist" seam seamAt={0.18}>
+    <SectionHeading
+      eyebrow="Why Bowline Federal"
+      title="Established engineering depth in a focused small business"
+      index="03"
+    />
+    <div class="mt-4">
+      {
+        teaserDiffs.map((d, i) => (
+          <DiffRow differentiator={d} index={i} flip={i % 2 === 1} icon={diffIcons[i]} />
+        ))
+      }
+    </div>
+    <div class="mt-10" data-reveal>
+      <Cta href="/differentiators" variant="secondary" arrow>All differentiators</Cta>
+    </div>
+  </Section>
+
+  <!-- Closing CTA — the line is made fast to the button. -->
+  <Section surface="navy">
+    <Panel tone="dark" accent="left" class="mx-auto max-w-3xl text-center">
+      <div data-reveal>
+        <img src="/logo-mark-sm.png" alt="" width="40" height="40" class="mx-auto h-10 w-10" />
+        <h2 class="mt-5 heading-2 text-mist-50">
+          Researching Bowline Federal for a requirement or teaming opportunity?
+        </h2>
+        <p class="mx-auto mt-4 max-w-xl text-base leading-relaxed text-steel-400">
+          Request our capability statement and we will respond with the
+          documentation your evaluation needs.
+        </p>
+        <div class="mt-8 flex justify-center">
+          <Cta href="/contact">Request Capability Statement</Cta>
+        </div>
+      </div>
+    </Panel>
+  </Section>
+</BaseLayout>
