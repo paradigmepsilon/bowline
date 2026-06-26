@@ -21,9 +21,12 @@ const isActive = (href: string) => current === href.replace(/\/$/, "");
         height="28"
         class="h-7 w-7 shrink-0"
       />
-      <span class="font-display text-base font-600 tracking-tight text-mist-50"
-        >{company.dba}</span
+      <span
+        class="font-display text-base font-600 leading-[1.05] tracking-tight text-mist-50"
       >
+        <span class="block">{company.shortName}</span>
+        <span class="block">Technologies</span>
+      </span>
     </a>
 
     <!-- CSS-only mobile menu: a hidden checkbox toggles the panel; no JS. -->
