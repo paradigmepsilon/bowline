@@ -18,3 +18,7 @@ npm-debug.log*
 .DS_Store
 .vscode/*
 !.vscode/extensions.json
+
+# personal source files (not site assets)
+Alex_Henry_Resume_*.md
+[0-9a-f]*-[0-9a-f]*-[0-9a-f]*-[0-9a-f]*-[0-9a-f]*.jpg
