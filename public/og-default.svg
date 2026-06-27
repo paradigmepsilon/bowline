@@ -30,7 +30,7 @@
   </g>
   <rect width="1200" height="630" fill="url(#fade)"/>
 
-  <!-- Mark — bowline knot-B (viewBox 0..40 scaled 1.5 into a 60px box) -->
+  <!-- Mark - bowline knot-B (viewBox 0..40 scaled 1.5 into a 60px box) -->
   <g transform="translate(90, 88) scale(1.5)">
     <path d="M11 5 V35" fill="none" stroke="#E2E8F0" stroke-width="3.1" stroke-linecap="round"/>
     <path d="M11 5 H21 a7 7 0 0 1 1.1 13.9" fill="none" stroke="#E2E8F0" stroke-width="3.1" stroke-linecap="round"/>
@@ -41,7 +41,7 @@
   <text x="172" y="130" font-family="'Sora', Arial, sans-serif" font-size="30" font-weight="600" fill="#E2E8F0" letter-spacing="-0.5">Bowline Federal Technologies</text>
 
   <!-- Eyebrow -->
-  <text x="90" y="300" font-family="'IBM Plex Mono', monospace" font-size="20" letter-spacing="3" fill="#3B82F6">SDVOSB · HUBZONE-ELIGIBLE · 8(a)-TRACK</text>
+  <text x="90" y="300" font-family="'IBM Plex Mono', monospace" font-size="20" letter-spacing="3" fill="#3B82F6">SDVOSB · 8(a)-TRACK · FEDERAL IT</text>
 
   <!-- Legal name -->
   <text x="88" y="372" font-family="'Sora', Arial, sans-serif" font-size="62" font-weight="700" fill="#F4F7FB" letter-spacing="-1.5">Bowline Federal</text>

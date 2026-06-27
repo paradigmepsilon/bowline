@@ -9,7 +9,6 @@ import DiffRow from "../components/DiffRow.astro";
 import CredentialBadge from "../components/CredentialBadge.astro";
 import { company, differentiators, credentials, federalCustomers } from "../config/company";
 
-const diffIcons = ["knot", "shield", "node", "lock", "shield"] as const;
 ---
 
 <BaseLayout
@@ -32,7 +31,7 @@ const diffIcons = ["knot", "shield", "node", "lock", "shield"] as const;
     <div class="mt-6">
       {
         differentiators.map((d, i) => (
-          <DiffRow differentiator={d} index={i} flip={i % 2 === 1} icon={diffIcons[i]} />
+          <DiffRow differentiator={d} index={i} flip={i % 2 === 1} />
         ))
       }
     </div>
@@ -73,7 +72,7 @@ const diffIcons = ["knot", "shield", "node", "lock", "shield"] as const;
   <Section surface="mist">
     <SectionHeading
       eyebrow="Credential Portfolio"
-      title="Practitioner certifications — held and in progress"
+      title="Practitioner certifications - held and in progress"
       lede="Certifications are labeled by their true status. Items marked “in progress” are actively being pursued, not yet held."
       index="03"
     />

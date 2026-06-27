@@ -13,15 +13,14 @@ import { company, competencies, certifications, differentiators } from "../confi
 
 const summaryCompetencies = competencies.slice(0, 6);
 const teaserDiffs = differentiators.slice(0, 3);
-const diffIcons = ["shield", "knot", "node"] as const;
 ---
 
 <BaseLayout
   title={company.shortName}
-  description={`${company.dba} — ${company.tagline} ${company.positioning}`}
+  description={`${company.dba} - ${company.tagline} ${company.positioning}`}
   path="/"
 >
-  <!-- Hero — asymmetric, left-aligned, big quiet knot in the negative space. -->
+  <!-- Hero - asymmetric, left-aligned, big quiet knot in the negative space. -->
   <section class="relative isolate overflow-hidden bg-navy">
     <!-- Cinematic facility backdrop + left-anchored navy scrim for legibility -->
     <img
@@ -71,7 +70,7 @@ const diffIcons = ["shield", "knot", "node"] as const;
     <SectionHeading
       eyebrow="Core Competencies"
       title="Engineering and advisory across the federal IT lifecycle"
-      lede="Eight disciplines spanning architecture, security, delivery, and operations — the depth to design, build, secure, and run mission systems."
+      lede="Eight disciplines spanning architecture, security, delivery, and operations - the depth to design, build, secure, and run mission systems."
       index="01"
     />
     <div class="mt-12">
@@ -86,7 +85,7 @@ const diffIcons = ["shield", "knot", "node"] as const;
   <ImageBand
     src="/server-hall.jpg"
     alt="Secure server hall with cool blue edge lighting"
-    caption="Built for mission systems — secure, available, under load"
+    caption="Built for mission systems - secure, available, under load"
   />
 
   <!-- Set-aside positioning + honest cert stack -->
@@ -123,7 +122,7 @@ const diffIcons = ["shield", "knot", "node"] as const;
     <div class="mt-4">
       {
         teaserDiffs.map((d, i) => (
-          <DiffRow differentiator={d} index={i} flip={i % 2 === 1} icon={diffIcons[i]} />
+          <DiffRow differentiator={d} index={i} flip={i % 2 === 1} />
         ))
       }
     </div>
@@ -132,7 +131,7 @@ const diffIcons = ["shield", "knot", "node"] as const;
     </div>
   </Section>
 
-  <!-- Closing CTA — the line is made fast to the button. -->
+  <!-- Closing CTA - the line is made fast to the button. -->
   <Section surface="navy">
     <Panel tone="dark" accent="left" class="mx-auto max-w-3xl text-center">
       <div data-reveal>

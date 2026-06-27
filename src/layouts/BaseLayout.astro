@@ -18,7 +18,7 @@ const ogImage = new URL("/og-default.svg", Astro.site);
 const fullTitle =
   title === company.shortName ? title : `${title} · ${company.shortName}`;
 
-// Organization structured data — legal name, market, contact (when populated).
+// Organization structured data - legal name, market, contact (when populated).
 const orgSchema: Record<string, unknown> = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -102,7 +102,7 @@ if (hasValue(company.email) || hasValue(company.phone)) {
     <!--
       Restrained scroll-reveal. Adds .is-visible to [data-reveal] elements as
       they enter the viewport. CSS handles the actual transition and the
-      prefers-reduced-motion override, so this stays tiny and progressive —
+      prefers-reduced-motion override, so this stays tiny and progressive -
       with JS disabled, [data-reveal] simply renders visible (see noscript).
     -->
     <script is:inline>

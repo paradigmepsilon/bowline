@@ -12,7 +12,7 @@ const isActive = (href: string) => current === href.replace(/\/$/, "");
     <a
       href="/"
       class="group flex items-center gap-2.5 text-mist-50"
-      aria-label={`${company.dba} — home`}
+      aria-label={`${company.dba} - home`}
     >
       <img
         src="/logo-mark-sm.png"
@@ -50,7 +50,7 @@ const isActive = (href: string) => current === href.replace(/\/$/, "");
       class="absolute inset-x-0 top-16 hidden flex-col gap-1 border-b border-steel-700/70 bg-navy px-6 pb-6 pt-2 peer-checked:flex md:static md:flex md:flex-row md:items-center md:gap-1 md:border-0 md:bg-transparent md:p-0"
     >
       {
-        nav.map((item) => (
+        nav.filter((item) => item.href !== "/contact").map((item) => (
           <a
             href={item.href}
             aria-current={isActive(item.href) ? "page" : undefined}

@@ -7,7 +7,7 @@ import { company } from "../config/company";
  * Replace `company.web3formsKey` (src/config/company.ts) with the real key
  * before launch; until then the endpoint returns a 4xx (expected). See README.
  *
- * TODO (Unified Ops rollup — NOT built here): Web3Forms retains every
+ * TODO (Unified Ops rollup - NOT built here): Web3Forms retains every
  * submission in its own dashboard/API. A future, separate job can read the
  * submission COUNT (a single integer, no PII) and report it as a UO rollup
  * metric. Do not add a UO integration in this static site, and never forward
@@ -25,7 +25,7 @@ const label = "block text-sm font-500 text-navy";
   <input
     type="hidden"
     name="subject"
-    value="Capability statement request — Bowline Federal"
+    value="Capability statement request - Bowline Federal"
   />
   <input type="hidden" name="from_name" value={company.dba} />
   <input type="hidden" name="redirect" value={redirectURL} />
