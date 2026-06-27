@@ -13,7 +13,7 @@ interface Props {
   /** Tailwind aspect ratio utility, default a cinematic band. */
   ratio?: string;
 }
-const { src, alt, caption, ratio = "aspect-[21/9]" } = Astro.props;
+const { src, alt, caption, ratio = "aspect-[16/9] sm:aspect-[21/9]" } = Astro.props;
 ---
 
 <div class="relative w-full overflow-hidden border-y border-steel-700/70 bg-navy">

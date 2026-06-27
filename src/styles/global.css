@@ -168,6 +168,7 @@
     font-family: var(--font-mono);
     font-size: 0.8125rem;
     letter-spacing: 0.01em;
+    overflow-wrap: anywhere;
   }
 
   /* ---- Scroll reveal (restrained, ~3/10) ---- */

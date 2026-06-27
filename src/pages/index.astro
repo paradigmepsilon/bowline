@@ -31,7 +31,7 @@ const teaserDiffs = differentiators.slice(0, 3);
     />
     <div class="absolute inset-0 -z-10" style="background: var(--scrim-left)"></div>
 
-    <div class="page-rail relative pb-16 pt-20 sm:pt-28 lg:pb-24 lg:pt-32">
+    <div class="page-rail relative pb-12 pt-14 sm:pb-16 sm:pt-28 lg:pb-24 lg:pt-32">
       <div class="max-w-2xl" data-reveal-group>
         <p class="eyebrow text-signal-bright" data-reveal>{company.positioningShort}</p>
         <h1 class="mt-5 display-xl text-mist-50" data-reveal>{company.dba}</h1>
@@ -48,8 +48,8 @@ const teaserDiffs = differentiators.slice(0, 3);
       </div>
 
       <!-- Honest set-aside ribbon: every channel tagged "in process". -->
-      <div class="mt-14 border-t border-steel-700/70 pt-6" data-reveal>
-        <ul class="flex flex-wrap items-center gap-x-6 gap-y-2">
+      <div class="mt-10 border-t border-steel-700/70 pt-6 sm:mt-14" data-reveal>
+        <ul class="flex flex-wrap items-center gap-x-4 gap-y-2 sm:gap-x-6">
           {
             certifications.map((cert) => (
               <li class="flex items-center gap-2">
@@ -90,7 +90,7 @@ const teaserDiffs = differentiators.slice(0, 3);
 
   <!-- Set-aside positioning + honest cert stack -->
   <Section surface="navy-700">
-    <div class="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+    <div class="grid gap-8 md:gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
       <div class="relative">
         <SectionHeading
           eyebrow="Set-Aside Positioning"

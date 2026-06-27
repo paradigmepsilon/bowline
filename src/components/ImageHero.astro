@@ -33,7 +33,9 @@ const {
 } = Astro.props;
 
 const Title = as;
-const minH = large ? "min-h-[78vh] lg:min-h-[86vh]" : "min-h-[44vh] lg:min-h-[52vh]";
+const minH = large
+  ? "min-h-[68vh] sm:min-h-[78vh] lg:min-h-[86vh]"
+  : "min-h-[52vh] sm:min-h-[44vh] lg:min-h-[52vh]";
 const titleClass = display ? "display-xl" : "display-lg";
 ---
 
@@ -51,7 +53,7 @@ const titleClass = display ? "display-xl" : "display-lg";
   <div class="absolute inset-x-0 top-0 -z-10 h-px bg-steel-700/70"></div>
   <div class="absolute inset-x-0 bottom-0 -z-10 h-px bg-steel-700/70"></div>
 
-  <div class="page-rail w-full py-20 sm:py-24">
+  <div class="page-rail w-full py-12 sm:py-20 lg:py-24">
     <div class="max-w-2xl" data-reveal-group>
       <p class="eyebrow text-signal-bright" data-reveal>{eyebrow}</p>
       <Title class:list={["mt-5 text-mist-50", titleClass]} data-reveal>{title}</Title>
