@@ -292,20 +292,132 @@ export const federalCustomers: ReadonlyArray<FederalCustomer> = [
 ] as const;
 
 // --- Principal (individual experience - no fabricated contract history) ----
+// Employers are described by sector and scale rather than named, in keeping with
+// the firm's "individual past performance, not corporate" framing.
+export interface ResumeRole {
+  /** Sector framing instead of named employer. */
+  sector: string;
+  /** Role held. */
+  role: string;
+  /** Span, e.g. "2017 - 2022". */
+  period: string;
+  /** Outcome-focused bullets, quantified where the work earned it. */
+  points: string[];
+}
+
+export interface PortraitImage {
+  src: string;
+  alt: string;
+}
+
 export const principal = {
-  /** Role/title shown publicly. Name left configurable. */
+  /** Role/title shown publicly. */
   title: "Founder & Principal",
-  /** Set to a name string when ready to publish it; null hides the name. */
-  name: null as string | null,
+  /** Name now published. */
+  name: "Alex R. Henry" as string | null,
+  /** Headshot. null hides the portrait. */
+  portrait: {
+    src: "/principal-portrait.jpg",
+    alt: "Alex R. Henry, Founder and Principal of Bowline Federal Technologies",
+  } as PortraitImage | null,
   serviceDisabledVeteran: true,
   summary:
-    "Bowline Federal Technologies is led by a service-disabled U.S. military veteran with more than 20 years of enterprise information technology experience and an MBA.",
+    "Bowline Federal Technologies is led by Alex R. Henry, a service-disabled U.S. military veteran with more than 20 years directing enterprise engineering, program delivery, and large-scale communication systems across defense, aviation, and technology. His career has centered on turning complex operational problems into production systems that hold up under real-world scale, while leading cross-functional teams, owning multimillion-dollar budgets, and managing vendor portfolios.",
+  /** Short headline credentials shown in the summary card. */
+  credentialLine: "MBV, University of Southern California · PMP · Lean Six Sigma Black Belt · AWS Certified",
+  /** Career told as individual past performance, employers kept generic. */
+  career: [
+    {
+      sector: "Enterprise technology & AI delivery",
+      role: "Director, IT Operations & Technology Advisory",
+      period: "2023 - Present",
+      points: [
+        "Leads technology strategy and end-to-end delivery for independent operators, owning every engagement from discovery and architecture through implementation and support.",
+        "Designed and deployed AI-driven communication systems that unify messaging channels into a single workflow, cutting response times and recovering hours of staff time per week.",
+        "Built a production communication and revenue platform from concept to launch, advising leaders on tech-stack and vendor decisions to consolidate spend on fit-for-purpose systems.",
+      ],
+    },
+    {
+      sector: "Major U.S. airline",
+      role: "Principal Technical Program Manager",
+      period: "2020 - 2022",
+      points: [
+        "Architected and delivered an enterprise outbound-communications platform that cut customer-service callbacks by more than 80 percent.",
+        "Led the cloud transformation of six mission-critical applications, reducing legacy infrastructure dependency and improving resilience across the estate.",
+        "Owned customer-notification infrastructure handling thousands of simultaneous interactions, delivering eight figures in measurable business impact.",
+      ],
+    },
+    {
+      sector: "Major U.S. airline",
+      role: "Senior IT & Software Engineering Manager",
+      period: "2017 - 2020",
+      points: [
+        "Led a 72-person engineering organization through the full development lifecycle, delivering 16 customer-notification systems into production.",
+        "Managed hiring, coaching, and delivery for staff across three countries, supporting 14 complex business applications.",
+        "Held cost and quality together across a large contract portfolio while sustaining a 92 percent on-time delivery rate.",
+      ],
+    },
+    {
+      sector: "United States Marine Corps",
+      role: "Director, IT Strategy & Program Delivery",
+      period: "2001 - 2017",
+      points: [
+        "Led enterprise IT strategy and infrastructure modernization, sustaining 99 percent system uptime through compliance, security, and data-management programs.",
+        "Drove process re-engineering that saved tens of millions and cut service-delivery costs, improving process efficiency by 30 percent.",
+        "Directed cross-functional initiatives and program budgets, keeping unit readiness in the top tier across multi-year periods.",
+      ],
+    },
+  ] as ReadonlyArray<ResumeRole>,
+  /** Education and recognition, public-safe. */
+  education: [
+    "Master of Business for Veterans (MBV), University of Southern California, Marshall School of Business",
+    "M.S., Management Information Systems",
+    "B.S., Computer Science",
+  ],
+  recognition: [
+    "Project Management Professional (PMP)",
+    "Lean Six Sigma Black Belt",
+    "AWS Certified Cloud Practitioner",
+    "Certified Project Director (CPD)",
+    "Meritorious Service Medal (x2)",
+    "Navy & Marine Corps Commendation Medal (x2)",
+  ],
+  /** Legacy field retained for any other consumers. */
   experience: [
     "20+ years architecting, securing, and delivering enterprise IT systems",
     "Program and project leadership across complex, multi-stakeholder environments",
     "Cloud architecture and modernization across AWS and Azure",
     "Cybersecurity engineering aligned to NIST and Zero Trust principles",
   ],
+} as const;
+
+// --- Operator bench (team assembled per engagement, not standing payroll) --
+export interface BenchRole {
+  title: string;
+  body: string;
+}
+
+export const teamBench = {
+  intro:
+    "A focused small business backed by a vetted bench. For each engagement, the principal assembles a team of senior operators matched to the mission: practitioners with federal and enterprise track records, ready to clear and deploy.",
+  roles: [
+    {
+      title: "Cloud & Platform Engineers",
+      body: "AWS and Azure architects who stand up secure landing zones, modernize workloads, and keep cost and compliance in view.",
+    },
+    {
+      title: "Cybersecurity & Compliance Leads",
+      body: "Practitioners fluent in NIST 800-53, RMF, and Zero Trust who carry systems from control implementation through authorization.",
+    },
+    {
+      title: "Program & Delivery Managers",
+      body: "PMP-disciplined leads who run scope, schedule, and cost against audit-ready cadence on ambiguous programs.",
+    },
+    {
+      title: "Software & Integration Engineers",
+      body: "Full-stack and systems-integration engineers who build to federal security and accessibility standards and document for maintainability.",
+    },
+  ] as ReadonlyArray<BenchRole>,
 } as const;
 
 /**

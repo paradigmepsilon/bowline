@@ -20,13 +20,14 @@ interface Props {
 const { caption, rows, tone = "light", class: className } = Astro.props;
 
 const ruleColor = tone === "dark" ? "border-steel-700/70" : "border-mist-200";
-const labelColor = tone === "dark" ? "text-steel-400" : "text-steel-600";
-const valueColor = tone === "dark" ? "text-mist-100" : "text-navy";
-const capColor = tone === "dark" ? "text-steel-500" : "text-steel-600";
+const labelColor = tone === "dark" ? "text-steel-200" : "text-steel-600";
+const valueColor = tone === "dark" ? "text-mist-50" : "text-navy";
+const capColor = tone === "dark" ? "text-mist-100" : "text-steel-600";
+const accentColor = tone === "dark" ? "text-signal-bright" : "text-signal";
 ---
 
 <table class:list={["w-full border-collapse text-left", className]}>
-  <caption class:list={["eyebrow mb-4 text-left", capColor]}>{caption}</caption>
+  <caption class:list={["eyebrow mb-4 text-left text-base font-700", capColor]}>{caption}</caption>
   <tbody>
     {
       rows.map((row, i) => (
@@ -41,7 +42,7 @@ const capColor = tone === "dark" ? "text-steel-500" : "text-steel-600";
             class:list={[
               "py-3 align-top text-sm",
               row.mono ? "mono-data" : "",
-              row.accent ? "text-signal" : valueColor,
+              row.accent ? accentColor : valueColor,
             ]}
           >
             {row.value}

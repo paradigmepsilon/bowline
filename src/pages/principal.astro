@@ -6,90 +6,164 @@ import ImageBand from "../components/ImageBand.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 import Cta from "../components/Cta.astro";
 import Panel from "../components/Panel.astro";
-import { company, principal, display } from "../config/company";
+import { company, principal, teamBench, display } from "../config/company";
 
 const principalName = display(principal.name, null);
 ---
 
 <BaseLayout
   title="Principal & Past Performance"
-  description={`${company.dba} is a newly formed firm. Its past performance is represented by the individual professional experience of its principal - a service-disabled veteran with 20+ years of enterprise IT experience and an MBA.`}
+  description={`${company.dba} is a newly formed firm led by Alex R. Henry, a service-disabled veteran with 20+ years directing enterprise engineering, program delivery, and large-scale systems. Its past performance is represented by the individual professional experience of its principal.`}
   path="/principal"
 >
   <ImageHero
     src="/hero-principal.jpg"
     imgAlt="Quiet executive workspace at dusk, twilight city beyond the glass"
     eyebrow="Principal & Past Performance"
-    title="A new firm, led by an experienced practitioner"
+    title="A new firm, led by a proven practitioner"
   />
 
-  <!-- New-entity disclosure + principal card -->
+  <!-- New-entity disclosure + principal card with portrait -->
   <Section surface="mist">
-    <div class="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+    <div class="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
       <div class="max-w-2xl" data-reveal>
-        <Panel tone="light" accent="left">
-          <p class="eyebrow text-signal">New Entity Disclosure</p>
-          <p class="mt-3 text-lg leading-relaxed text-navy">
-            {company.newEntityStatement}
-          </p>
-        </Panel>
-        <p class="mt-8 text-base leading-relaxed text-steel-600">{principal.summary}</p>
+        <p class="text-base leading-relaxed text-steel-600">{principal.summary}</p>
         <p class="mt-4 text-base leading-relaxed text-steel-600">
           We do not represent corporate past performance the firm has not yet
           earned. What follows is the principal&rsquo;s individual professional
-          experience - the foundation on which Bowline Federal is built.
+          experience, the foundation on which Bowline Federal is built.
         </p>
       </div>
 
       <aside data-reveal>
-        <Panel tone="dark">
-          <p class="eyebrow text-signal-bright">{principal.title}</p>
+        <Panel tone="light" class="overflow-hidden p-0 sm:p-0">
           {
-            principalName && (
-              <p class="mt-2 font-display text-xl font-600 text-mist-50">{principalName}</p>
+            principal.portrait && (
+              <img
+                src={principal.portrait.src}
+                alt={principal.portrait.alt}
+                width="864"
+                height="1152"
+                loading="lazy"
+                class="w-full object-contain"
+              />
             )
           }
-          <dl class="mt-6 space-y-4 border-t border-steel-700/70 pt-6 text-sm">
-            <div>
-              <dt class="eyebrow text-steel-500">Service</dt>
-              <dd class="mt-1.5 text-steel-200">Service-disabled U.S. military veteran</dd>
-            </div>
-            <div>
-              <dt class="eyebrow text-steel-500">Experience</dt>
-              <dd class="mt-1.5 text-steel-200">20+ years enterprise information technology</dd>
-            </div>
-            <div>
-              <dt class="eyebrow text-steel-500">Education</dt>
-              <dd class="mt-1.5 text-steel-200">Master of Business Administration</dd>
-            </div>
-          </dl>
+          <div class="p-6 sm:p-8">
+            <p class="eyebrow text-signal">{principal.title}</p>
+            {
+              principalName && (
+                <p class="mt-2 font-display text-xl font-600 text-navy">{principalName}</p>
+              )
+            }
+            <p class="mt-3 text-sm leading-relaxed text-black">
+              {principal.credentialLine}
+            </p>
+            <dl class="mt-6 space-y-4 border-t border-mist-200 pt-6 text-sm">
+              <div>
+                <dt class="eyebrow text-steel-500">Service</dt>
+                <dd class="mt-1.5 text-steel-700">Service-disabled U.S. military veteran</dd>
+              </div>
+              <div>
+                <dt class="eyebrow text-steel-500">Experience</dt>
+                <dd class="mt-1.5 text-steel-700">20+ years enterprise information technology</dd>
+              </div>
+              <div>
+                <dt class="eyebrow text-steel-500">Education</dt>
+                <dd class="mt-1.5 text-steel-700">
+                  Master of Business for Veterans, USC Marshall
+                </dd>
+              </div>
+            </dl>
+          </div>
         </Panel>
       </aside>
     </div>
   </Section>
 
-  <!-- Individual experience -->
+  <!-- Individual career, employers framed by sector -->
   <Section surface="navy-700">
     <SectionHeading
       eyebrow="Individual Experience"
-      title="Two decades of enterprise IT practice"
+      title="Two decades turning hard problems into systems that hold"
       tone="dark"
       index="02"
     />
-    <ul class="mt-10 grid gap-px overflow-hidden rounded border border-steel-700/70 bg-steel-700/70 sm:grid-cols-2" data-reveal-group>
+    <div class="mt-12 space-y-px overflow-hidden rounded border border-steel-700/70 bg-steel-700/70" data-reveal-group>
       {
-        principal.experience.map((item) => (
-          <li class="flex gap-3 bg-navy-700 p-6" data-reveal>
-            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-signal" aria-hidden="true" />
-            <span class="text-sm leading-relaxed text-steel-300">{item}</span>
-          </li>
+        principal.career.map((role) => (
+          <article class="bg-navy-700 p-6 sm:p-8" data-reveal>
+            <div class="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+              <div>
+                <p class="font-display text-lg font-600 text-mist-50">{role.role}</p>
+                <p class="mt-0.5 text-sm text-signal-bright">{role.sector}</p>
+              </div>
+              <p class="eyebrow shrink-0 text-steel-500">{role.period}</p>
+            </div>
+            <ul class="mt-5 space-y-3">
+              {role.points.map((point) => (
+                <li class="flex gap-3">
+                  <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-signal" aria-hidden="true" />
+                  <span class="text-sm leading-relaxed text-steel-300">{point}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
         ))
       }
-    </ul>
+    </div>
+
+    <div class="mt-10 grid gap-px overflow-hidden rounded border border-steel-700/70 bg-steel-700/70 sm:grid-cols-2" data-reveal-group>
+      <div class="bg-navy-700 p-6 sm:p-8" data-reveal>
+        <p class="eyebrow text-steel-500">Education</p>
+        <ul class="mt-4 space-y-2.5">
+          {
+            principal.education.map((item) => (
+              <li class="text-sm leading-relaxed text-steel-300">{item}</li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="bg-navy-700 p-6 sm:p-8" data-reveal>
+        <p class="eyebrow text-steel-500">Certifications & Recognition</p>
+        <ul class="mt-4 flex flex-wrap gap-2">
+          {
+            principal.recognition.map((item) => (
+              <li class="rounded border border-steel-700/70 px-2.5 py-1 text-xs text-steel-300">
+                {item}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
     <p class="mt-8 max-w-2xl text-xs leading-relaxed text-steel-500" data-reveal>
       The above reflects the principal&rsquo;s individual career and is not a
       representation of contracts performed by Bowline Federal Technologies, LLC.
     </p>
+  </Section>
+
+  <!-- Operator bench -->
+  <Section surface="mist">
+    <SectionHeading
+      eyebrow="The Team Behind the Principal"
+      title="A vetted bench, assembled to the mission"
+      index="03"
+    />
+    <p class="mt-6 max-w-2xl text-base leading-relaxed text-steel-600" data-reveal>
+      {teamBench.intro}
+    </p>
+    <div class="mt-10 grid gap-6 sm:grid-cols-2" data-reveal-group>
+      {
+        teamBench.roles.map((role) => (
+          <Panel tone="light" accent="top" class="h-full">
+            <p class="font-display text-base font-600 text-navy">{role.title}</p>
+            <p class="mt-3 text-sm leading-relaxed text-steel-600">{role.body}</p>
+          </Panel>
+        ))
+      }
+    </div>
   </Section>
 
   <!-- Judgment band -->
